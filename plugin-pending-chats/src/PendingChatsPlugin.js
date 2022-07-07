@@ -42,10 +42,6 @@ export default class PendingChatsPlugin extends FlexPlugin {
     flex.WorkerDirectory.Tabs.Content.add(
       <flex.Tab key="custom-directory" label="Destinations">
         <CustomDirectory
-          invokeTransfer={(params) => {
-            flex.Actions.invokeAction('TransferTask', params);
-            flex.Actions.invokeAction('HideDirectory');
-          }}
         />
       </flex.Tab>
     );
