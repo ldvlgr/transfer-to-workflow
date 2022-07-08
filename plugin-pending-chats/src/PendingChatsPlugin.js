@@ -2,6 +2,8 @@ import React from 'react';
 import { VERSION } from '@twilio/flex-ui';
 import { FlexPlugin } from '@twilio/flex-plugin';
 import TransferButton from './components/TransferButton/TransferButton';
+import PendingButton from './components/PendingButton/PendingButton';
+
 import reducers, { namespace } from './states';
 
 import { setUpActions } from './helpers/actions';
@@ -28,8 +30,33 @@ export default class PendingChatsPlugin extends FlexPlugin {
     setUpNotifications();
     setUpActions();
 
+    //Save workerName in the Chat Channel attributes for known agent routing on next convo
+    manager.workerClient.on("reservationCreated", async reservation => {
+      if (reservation.task.taskChannelUniqueName == 'chat') {
+        let channelSid = reservation.task.attributes.channelSid;
+        manager.chatClient.getChannelBySid(channelSid)
+          .then(async (channel) => {
+            let channelAttributes = await channel.getAttributes();
+            console.log(PLUGIN_NAME, 'Channel Attributes:', channelAttributes);
+            let workerName = manager.workerClient.name; 
+            const newChanAttr = {...channelAttributes, workerName};
+            console.log(PLUGIN_NAME, 'Updated Channel Attributes:', newChanAttr);
+            await channel.updateAttributes(newChanAttr);
+
+          });
+        }
+      });
+
+
+
     const options = { sortOrder: -1 };
     
+    flex.TaskCanvasHeader.Content.add(<PendingButton key="chat-pending-button" />, {
+      sortOrder: 1,
+      if: (props) =>
+        props.channelDefinition.capabilities.has('Chat') && props.task.taskStatus === 'assigned',
+    });
+
     flex.TaskCanvasHeader.Content.add(<TransferButton key="chat-transfer-button" />, {
       sortOrder: 1,
       if: (props) =>
