@@ -31,30 +31,6 @@ export default class PendingChatsPlugin extends FlexPlugin {
     setUpActions();
 
 
-    //Queue Stats Dashboard
-    //flex.QueuesStats.AggregatedQueuesDataTiles.Content.remove("agents-by-activity-chart-tile");
-    
-    //flex.QueuesStats.QueuesDataTable.Content.remove("agents");
-    
-
-    //Save workerName in the Chat Channel attributes for known agent routing on next convo
-    manager.workerClient.on("reservationCreated", async reservation => {
-      if (reservation.task.taskChannelUniqueName == 'sms') {
-        let channelSid = reservation.task.attributes.channelSid;
-        manager.chatClient.getChannelBySid(channelSid)
-          .then(async (channel) => {
-            let channelAttributes = await channel.getAttributes();
-            console.log(PLUGIN_NAME, 'Channel Attributes:', channelAttributes);
-            let workerName = manager.workerClient.name; 
-            const newChanAttr = {...channelAttributes, workerName};
-            console.log(PLUGIN_NAME, 'Updated Channel Attributes:', newChanAttr);
-            await channel.updateAttributes(newChanAttr);
-
-          });
-        }
-      });
-
-
 
     const options = { sortOrder: -1 };
     
