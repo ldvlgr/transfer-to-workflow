@@ -2,7 +2,7 @@ import React from 'react';
 import { VERSION } from '@twilio/flex-ui';
 import { FlexPlugin } from '@twilio/flex-plugin';
 import TransferButton from './components/TransferButton/TransferButton';
-import PendingButton from './components/PendingButton/PendingButton';
+
 
 import reducers, { namespace } from './states';
 
@@ -34,12 +34,6 @@ export default class PendingChatsPlugin extends FlexPlugin {
 
     const options = { sortOrder: -1 };
     
-    flex.TaskCanvasHeader.Content.add(<PendingButton key="chat-pending-button" />, {
-      sortOrder: 1,
-      if: (props) =>
-        props.channelDefinition.capabilities.has('Chat') && props.task.taskStatus === 'assigned',
-    });
-
     flex.TaskCanvasHeader.Content.add(<TransferButton key="chat-transfer-button" />, {
       sortOrder: 1,
       if: (props) =>
