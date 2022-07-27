@@ -30,7 +30,21 @@ export default class PendingChatsPlugin extends FlexPlugin {
     setUpNotifications();
     setUpActions();
 
+    window.Handlebars.registerHelper('showRole', (workerAttributes) => {
+      if (workerAttributes.roles.includes('supervisor')) {
+        return '(SUPER)';
+      } else if (workerAttributes.roles.includes('agent')){
+        return '(AGENT)';
+      } else if (workerAttributes.roles.includes('admin')){
+        return '(ADMIN)';
+      } else {
+        return '';
+      }
+    });
 
+
+
+    manager.strings.WorkerDirectoryItemFirstLine = "{{worker.fullName}} {{showRole worker.attributes}}";
 
     const options = { sortOrder: -1 };
     
