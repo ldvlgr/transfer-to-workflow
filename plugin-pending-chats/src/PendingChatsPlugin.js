@@ -32,11 +32,11 @@ export default class PendingChatsPlugin extends FlexPlugin {
 
     window.Handlebars.registerHelper('showRole', (workerAttributes) => {
       if (workerAttributes.roles.includes('supervisor')) {
-        return '(SUPER)';
+        return '(Supervisor)';
       } else if (workerAttributes.roles.includes('agent')){
-        return '(AGENT)';
+        return '(Agent)';
       } else if (workerAttributes.roles.includes('admin')){
-        return '(ADMIN)';
+        return '(Admin)';
       } else {
         return '';
       }
@@ -45,7 +45,7 @@ export default class PendingChatsPlugin extends FlexPlugin {
 
 
     manager.strings.WorkerDirectoryItemFirstLine = "{{worker.fullName}} {{showRole worker.attributes}}";
-
+    manager.strings.WorkerDirectoryItemSecondLine= "{{worker.activityName}} | {{worker.attributes.routing.skills}}";
     const options = { sortOrder: -1 };
     
     flex.TaskCanvasHeader.Content.add(<TransferButton key="chat-transfer-button" />, {
