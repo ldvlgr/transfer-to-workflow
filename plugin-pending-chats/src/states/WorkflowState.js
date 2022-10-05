@@ -1,7 +1,7 @@
 const ACTION_SET_WORKFLOWS = "SET_WORKFLOWS";
 
 const initialState = {
-  workflows: undefined,
+  workflows: [],
 };
 
 // Define plugin actions
@@ -17,7 +17,6 @@ export function reduce(state = initialState, action) {
   switch (action.type) {
     case ACTION_SET_WORKFLOWS:
       return {
-        ...state,
         workflows: action.workflows,
       };
     default:

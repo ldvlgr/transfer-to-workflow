@@ -11,9 +11,9 @@ import { setUpNotifications } from './helpers/notifications';
 import CustomDirectory from './components/CustomDirectory/CustomDirectory';
 import TaskRouterUtil from './helpers/TaskRouterUtil';
 import { Actions as WorkflowActions } from './states/WorkflowState';
-const PLUGIN_NAME = 'PendingChatsPlugin';
+const PLUGIN_NAME = 'WorkflowTransferPlugin';
 
-export default class PendingChatsPlugin extends FlexPlugin {
+export default class WorkflowTransferPlugin extends FlexPlugin {
   constructor() {
     super(PLUGIN_NAME);
   }
@@ -46,6 +46,10 @@ export default class PendingChatsPlugin extends FlexPlugin {
 
     manager.strings.WorkerDirectoryItemFirstLine = "{{worker.fullName}} {{showRole worker.attributes}}";
     manager.strings.WorkerDirectoryItemSecondLine= "{{worker.activityName}} | {{worker.attributes.routing.skills}}";
+    
+    flex.WorkerDirectoryTabs.defaultProps.hiddenWorkerFilter = 'data.activity_name CONTAINS "Available"'
+
+    
     const options = { sortOrder: -1 };
     
     flex.TaskCanvasHeader.Content.add(<TransferButton key="chat-transfer-button" />, {

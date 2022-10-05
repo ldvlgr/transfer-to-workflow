@@ -1,5 +1,5 @@
 import * as FlexPlugin from '@twilio/flex-plugin';
 
-import PendingChatsPlugin from './PendingChatsPlugin';
+import WorkflowTransferPlugin from './WorkflowTransferPlugin';
 
-FlexPlugin.loadPlugin(PendingChatsPlugin);
+FlexPlugin.loadPlugin(WorkflowTransferPlugin);

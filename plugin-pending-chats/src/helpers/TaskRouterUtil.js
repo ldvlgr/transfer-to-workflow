@@ -1,6 +1,6 @@
 import { Manager } from '@twilio/flex-ui';
 const manager = Manager.getInstance();
-const PLUGIN_NAME = 'PendingChatsPlugin';
+const PLUGIN_NAME = 'WorkflowTransferPlugin';
 
 class TaskRouterUtil {
 

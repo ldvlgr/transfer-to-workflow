@@ -26,6 +26,7 @@ class CustomDirectory extends React.Component {
           vertical
         >
           {this.props.workflows.map((item) => {
+            if (item.friendlyName.includes("Transfer"))  {
             return (
               <DirectoryItem
                 label={item.friendlyName}
@@ -34,6 +35,7 @@ class CustomDirectory extends React.Component {
                 onTransferClick={this.onTransferClick}
               />
             );
+          }
           })}
 
         </ItemContainer>
@@ -43,7 +45,7 @@ class CustomDirectory extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  workflows: state['pending-chats'].workflows.workflows || [],
+  workflows: state['transfers'].workflows.workflows || [],
 });
 
 export default connect(mapStateToProps)(withTaskContext(CustomDirectory));
